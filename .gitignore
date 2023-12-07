@@ -19,6 +19,10 @@ pom.xml.asc
 .lein-failures
 .nrepl-port
 
+### LSP ###
+.clj-kondo/
+.lsp/
+
 
 ### OSX ###
 .DS_Store
