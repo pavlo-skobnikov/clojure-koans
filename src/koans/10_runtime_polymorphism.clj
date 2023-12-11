@@ -1,4 +1,5 @@
 (ns koans.10-runtime-polymorphism
+  #_{:clj-kondo/ignore [:refer-all]}
   (:require [koan-engine.core :refer :all]))
 
 (defn hello
@@ -9,20 +10,24 @@
                           (interpose ", " (cons a more)))
                    "!")))
 
+(defn a-eats-y
+  [a y]
+  (str (:name a) " eats " y "."))
+
 (defmulti diet (fn [x] (:eater x)))
-(defmethod diet :herbivore [a] __)
-(defmethod diet :carnivore [a] __)
-(defmethod diet :default [a] __)
+(defmethod diet :herbivore [a] (a-eats-y a "veggies"))
+(defmethod diet :carnivore [a] (a-eats-y a "animals"))
+(defmethod diet :default [a] (str "I don't know what " (:name a) " eats."))
 
 (meditations
   "Some functions can be used in different ways - with no arguments"
-  (= __ (hello))
+  (= "Hello World!" (hello))
 
   "With one argument"
-  (= __ (hello "world"))
+  (= "Hello, you silly world." (hello "world"))
 
   "Or with many arguments"
-  (= __
+  (= "Hello to this group: Peter, Paul, Mary!"
      (hello "Peter" "Paul" "Mary"))
 
   "Multimethods allow more complex dispatching"
